@@ -1,0 +1,188 @@
+---
+title: "Chicago Taxi Trip Data Analysis"
+format: gfm
+execute:
+  warning: false
+  message: false
+  errors: false
+jupyter: python3
+---
+
+## Overview
+
+This project analyzes **Chicago taxi trip data** to provide actionable insights for taxi companies. The goal is to help optimize operations, including:
+
+- Fleet placement
+- Driver allocation by time of day
+- Payment methods strategy
+- Maximizing revenue via fares and tips
+
+The analysis uses **BigQuery data from April 2017 to April 2025**, focusing on trip fares, tips, payment types, and pickup/dropoff locations.
+
+---
+
+## Why This Project Matters
+
+Taxi companies need data-driven insights to improve profitability and customer satisfaction. By analyzing **trip patterns, fare trends, and customer payment behaviors**, companies can:
+
+- Optimize driver schedules
+- Position fleets in high-demand areas
+- Encourage payment methods that maximize tips
+- Identify underserved neighborhoods for potential expansion
+
+---
+
+## Dataset Description
+
+**Dataset Name:** Chicago Taxi Trips  
+**Source:** BigQuery  
+**Period:** April 12, 2017 – April 27, 2025  
+**Update Frequency:** Weekly (Sundays)  
+
+### Key Variables
+
+| Feature | Type | Description |
+|---------|------|------------|
+| `trip_start_timestamp` | Timestamp | Trip start time |
+| `trip_end_timestamp` | Timestamp | Trip end time |
+| `trip_seconds` | Integer | Trip duration in seconds |
+| `trip_miles` | Float | Distance of trip in miles |
+| `pickup_community_area` | Integer | Neighborhood of pickup |
+| `dropoff_community_area` | Integer | Neighborhood of dropoff |
+| `fare` | Float | Trip fare (USD) |
+| `tips` | Float | Tip amount (USD) |
+| `payment_type` | Categorical | Payment method (cash, card, etc.) |
+
+### Data Limitations
+
+- Missing values may exist
+- Accuracy depends on driver/passenger reporting
+- External factors (weather, events) not included
+- Some neighborhoods may have limited data coverage
+- Data can only be read in Google Collab, due to BigQuery usage
+
+---
+
+## Methodology
+
+The analysis follows these steps:
+
+1. **Data Cleaning & Preprocessing**  
+   - Ensured `NOT NULL` constraints in queries
+   - Converted numeric fields for visualization
+   - Handled categorical features for modeling
+
+2. **Exploratory Data Analysis (EDA)**  
+   - Average fare and tips by hour
+   - Total passenger volume by hour
+   - Popular pickup locations
+   - Payment method preferences
+
+3. **Predictive Modeling**  
+   - Logistic regression to predict likelihood of receiving a tip
+   - Feature scaling and one-hot encoding applied
+
+4. **Managerial Insights & Recommendations**  
+   - Driver allocation strategy
+   - Payment method adoption
+   - Neighborhood targeting
+
+---
+
+## Core Libraries Used
+
+- `pandas` → Data manipulation  
+- `numpy` → Numerical operations  
+- `matplotlib.pyplot` & `seaborn` → Visualization  
+- `plotly.express` & `plotly.graph_objects` → Interactive plots  
+- `google.cloud.bigquery` → Access BigQuery data  
+- `sklearn` → Logistic regression, preprocessing, train-test split  
+- `imblearn` → Data balancing (SMOTE, RandomOverSampler)
+
+---
+
+## Exploratory Data Analysis
+
+### 1. Average Tip and Fare by Hour
+
+The analysis identifies which hours yield **highest fares and tips**, helping companies schedule drivers effectively.
+
+![Trip Fare and Tips Screenshot](images/image1.png)
+
+#### Key Insight:
+  - Morning (5–7 a.m.): **Highest average fare and tips**
+  - Afternoon (3–5 p.m.): High passenger volumes, slightly lower fares
+
+### 2. Total Passengers by Hour
+
+Understanding passenger volume is crucial for driver allocation.
+
+![Total Passengers Per Hour Screenshot](images/image2.png)
+
+#### Key Insight:
+  - Evening rush (5–7 p.m.): Peak passenger volume
+  - Suggests deploying maximum drivers during high-volume windows
+
+
+### 3. Popular Pickup Locations
+
+Mapping community area codes to neighborhood names identifies high-demand areas.
+
+![Most Popular Pickup Locations Screenshot](images/image3.png)
+
+#### Key Insight:
+  - Downtown (Near North Side, The Loop) dominates pickups
+  - Suburban areas still contribute significantly, indicating **growth potential**
+
+### 4. Customer Payment Preferences
+
+Examining payment types reveals which methods maximize revenue and tips.
+
+![Payment Preferences Screenshot](images/image4.png)
+
+#### Key Insight:
+  - Cash is most popular
+  - Credit cards generate **higher total tips and fare revenue**
+  - Mobile payments are increasing in popularity
+
+## Predictive Modeling: Logistic Regression
+
+Objective: **Predict likelihood of a trip receiving a tip based on trip features.**
+
+![Model Screenshot](images/image5.png)
+
+#### Key Findings:
+  - Accuracy: ~91%
+  - Most positive predictors: Credit card or mobile payments, trip length
+  - Negative predictors: Cash payments, very short trips, unknown payment types
+
+## Managerial Insights
+  - Driver Allocation
+    - Morning: High fare/tip per trip → **prioritize profitability**
+    - Evening: High volume → **prioritize occupancy**
+  - Payment Method Strategy
+    - Promote credit card usage to maximize tips and revenue
+    - Consider mobile payment adoption
+  - Fleet Placement
+    - Focus on Downtown for maximum demand
+    - Maintain service in suburban areas for untapped potential
+  - Company-Specific Strategies
+    - Some companies correlate with specific payment types → potential for targeted marketing
+
+## Recommendations
+  - Schedule drivers for morning (5–7 a.m.) and evening (5–7 p.m.)
+  - Encourage credit card usage with incentives
+  - Concentrate fleets in high-demand neighborhoods but do not ignore suburban areas
+  - Explore predictive modeling to forecast demand and optimize resources
+
+## Future Directions
+  - Investigate impact of weather and events on trip patterns
+  - Analyze passenger demographics for personalized services
+  - Develop predictive models for demand forecasting
+  - Build interactive dashboards for real-time decision support
+
+## Authors
+**Connor McHugh**
+**Date:** April 29th, 2025  
+**Course/Project:** BUA 451: Advanced Business Analytics  
+**Dataset:** Chicago Taxi Trips (BigQuery)

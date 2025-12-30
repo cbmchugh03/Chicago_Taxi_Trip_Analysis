@@ -14,7 +14,8 @@ including:
 
 The analysis uses **BigQuery data from April 2017 to April 2025**,
 focusing on trip fares, tips, payment types, and pickup/dropoff
-locations.
+locations. Because the analysis uses Big Query through Google Collab,
+the project can only be done in Google Collab.
 
 ------------------------------------------------------------------------
 
